@@ -1,3 +1,4 @@
+
         const startScreen = document.getElementById('startScreen');
         const gameContainer = document.getElementById('gameContainer');
         const playerXNameInput = document.getElementById('playerXName');
@@ -18,6 +19,7 @@
         let playerNames = { X: 'Player X', O: 'Player O' };
         let gameMode = 'multiplayer';
         let botDifficulty = 'easy';
+        let botStartsNext = false; // Tracks if bot should start next game
 
         const winningCombinations = [
             [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
@@ -50,12 +52,14 @@
                 scores[currentPlayer]++;
                 updateScoreDisplay();
                 gameActive = false;
+                if (gameMode === 'bot') botStartsNext = !botStartsNext; // Toggle for next game
                 return;
             }
 
             if (board.every(cell => cell !== '')) {
                 status.textContent = "It's a draw!";
                 gameActive = false;
+                if (gameMode === 'bot') botStartsNext = !botStartsNext; // Toggle for next game
                 return;
             }
 
@@ -75,9 +79,9 @@
 
         function restartGame() {
             board = ['', '', '', '', '', '', '', '', ''];
-            currentPlayer = 'X';
+            currentPlayer = gameMode === 'bot' && botStartsNext ? 'O' : 'X';
             gameActive = true;
-            status.textContent = gameMode === 'bot' ? `${playerNames.X}'s turn` : `${playerNames[currentPlayer]}'s turn`;
+            status.textContent = gameMode === 'bot' && currentPlayer === 'O' ? "Computer's turn" : `${playerNames[currentPlayer]}'s turn`;
             cells.forEach(cell => {
                 cell.textContent = '';
                 cell.classList.remove('x', 'o');
@@ -104,10 +108,10 @@
             const oName = gameMode === 'bot' ? 'Computer' : playerONameInput.value.trim() || 'Player O';
             playerNames = { X: xName, O: oName };
             botDifficulty = difficultySelect.value;
+            botStartsNext = false; // Player starts first game in Bot mode
             startScreen.classList.add('hidden');
             gameContainer.classList.remove('hidden');
-            status.textContent = gameMode === 'bot' ? `${playerNames.X}'s turn` : `${playerNames[currentPlayer]}'s turn`;
-            updateScoreDisplay();
+            restartGame(); // Initialize with correct starting player
         }
 
         function makeBotMove() {
@@ -127,12 +131,14 @@
                     scores.O++;
                     updateScoreDisplay();
                     gameActive = false;
+                    botStartsNext = !botStartsNext; // Toggle for next game
                     return;
                 }
 
                 if (board.every(cell => cell !== '')) {
                     status.textContent = "It's a draw!";
                     gameActive = false;
+                    botStartsNext = !botStartsNext; // Toggle for next game
                     return;
                 }
 
