@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AL-Khalifa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="start-screen" id="startScreen">
+        <h1>AL-Khalifa X/O</h1>
+        <input type="text" id="playerXName" placeholder="Player X Name" maxlength="20">
+        <input type="text" id="playerOName" placeholder="Player O Name" maxlength="20">
+        <div class="mode-selection">
+            <input type="radio" name="mode" value="multiplayer" checked>Local Multiplayer</label>
+            <input type="radio" name="mode" value="bot">Play Against Bot</label>
+            <select id="difficulty" disabled>
+                <option value="easy">Easy</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+        <button id="startGame">Start Game</button>
+    </div>
+    <div class="game-container hidden" id="gameContainer">
+        <div class="status" id="status">Player X's turn</div>
+        <div class="score" id="score">Score - X: 0, O: 0</div>
+                <button class="home" id="home">Home</button>
+        <div class="board" id="board">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+        </div>
+        <button class="restart" id="restart">Restart Game</button>
+        <button class="reset-score" id="resetScore">Reset Score</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
